@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <menuitem id="estate_property_root" name="Real Estate">
+
+        <!-- First level menu1 -->
+        <menuitem id="estate_property_first_level_menu1" name="Advertisments">
+            <!-- Action menu-->
+            <menuitem id="estate_property_model_menu_action" action="estate_property_action"/>
+        </menuitem>
+
+        <!-- First level menu2 -->
+        <menuitem id="estate_property_type_first_level_menu2" name="Settings">
+
+            <!-- Action menu-->
+            <menuitem id="estate_property_type_model_menu_action" action="estate_property_type_action"/>
+            <menuitem id="estate_property_tag_model_menu_action" action="estate_property_tag_action"/>
+        </menuitem>
+
+    </menuitem>
+</odoo> 
