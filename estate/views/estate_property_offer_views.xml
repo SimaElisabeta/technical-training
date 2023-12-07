@@ -22,13 +22,15 @@
                     type="object" 
                     icon="fa-check" 
                     title="Accept" 
-                    attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}"/>
+                    attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}"
+                />
 
                 <button 
                     name="action_offer_refused" 
                     type="object" icon="fa-times" 
                     title="Refuse" 
-                    attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}"/>
+                    attrs="{'invisible': ['|', ('status', '=', 'accepted'), ('status', '=', 'refused')]}"
+                />
 
                 <field name="status" invisible="1"/>
             </tree>

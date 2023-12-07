@@ -14,30 +14,33 @@ class EstateProperty(models.Model):
         inverse_name='property_type_id',
     )
 
+    offer_ids = fields.One2many(
+        comodel_name='estate.property.offer',
+        inverse_name='property_type_id',
+    )
     
+    offer_count = fields.Integer(
+        compute = "_compute_offer_count",
+        string="Offers"
+    )
 
 
+    @api.depends("offer_ids")
+    def _compute_offer_count(self):
+        for property_type in self:
+            property_type.offer_count = len(self.offer_ids)
 
 
-    # offer_ids = fields.One2many(
-    #     comodel_name='estate.property.offer',
-    #     inverse_name='property_type_id',
-    # )
-    
-    
-    # offer_count = fields.Integer(
-    #     compute = "_compute_offer_count"
-    # )
-
-
-    # @api.depends("offer_ids")
-    # def _compute_offer_count(self):
-    #     for property in self.property_ids:
-
-    #         self.offer_count = len()
-
-    
-
+    def action_view_all_property_type_offers(self):
+        return {
+            'name': 'Property Offers',
+            'res_model': 'estate.property.offer',
+            'view_mode': 'list,form',            
+            'context': {'create': False},
+            'domain': [('property_type_id', '=', self.id)],
+            'target': 'current',
+            'type': 'ir.actions.act_window',
+        }
 
 ###################################################### SQL constraints - field ######################################################
 # _sql_constraints = [

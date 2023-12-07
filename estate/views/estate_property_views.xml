@@ -18,17 +18,14 @@
                 <field name="name"/>
                 <field name="property_type_id"/>
                 <field name="postcode"/>
-
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-
                 <field name="bedrooms"/>
                 <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="date_availability" optional="true"/>
 
-
-                <!-- decoration-success="state=='offer received'" -->
+                <!-- decorations for state -->
                 <field name="state" invisible="1"/>
             </tree>
         </field>
@@ -41,205 +38,104 @@
         <field name="arch" type="xml">
            
             <form string="Estate Property" create="1" >
-                    
-                    <!-- Header buttons  -->
-                    <header>
-                        <button name="set_state_sold" type="object" string="sold" states="new,offer received,offer accepted,"/>
-                        <button name="set_state_canceled" type="object" string="cancel" states="new,offer received,offer accepted,"/>
-                        <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold"/>
-                    </header>
-                    
-                    <!-- Name title-->
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name"/>
-                        </h1>
-                    </div>
+                
+                <!-- Header buttons  -->
+                <header>
+                    <button name="set_state_sold" type="object" string="sold" states="new,offer received,offer accepted,"/>
+                    <button name="set_state_canceled" type="object" string="cancel" states="new,offer received,offer accepted,"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold"/>
+                </header>
+                
 
-                    <!-- Tags title -->
-                    <div class="oe_title">
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
-                        <!-- <field name="second_tag_ids" widget="many2many_tags"/> -->
-                    </div>
+                <!-- Name title-->
+                <div class="oe_title">
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                </div>
 
+
+                <!-- Tags title -->
+                <div class="oe_title">
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+                </div>
+
+
+                <group>
+                    <!-- Column left  -->
                     <group>
-                        <!-- Column left  -->
-                        <group>
-                            <!-- <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold"/> -->
-                            <field name="property_type_id" options="{'no_create_edit': True, 'no_create': True}"/>
-                            <field name="postcode"/>
-                            <field name="date_availability" string="Available From"/>
-                        </group>
-
-                        <!-- Column right  -->
-                        <group>
-                            <field name="expected_price" />
-                            <field name="best_price"/>
-                            <field name="selling_price"/>
-                        </group>
+                        <!-- <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold"/> -->
+                        <field name="property_type_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="postcode"/>
+                        <field name="date_availability" string="Available From"/>
                     </group>
-                    
 
-                    
-                    <notebook>
-                        <!-- Description -->
-                        <page string="Description">
-                            <group>
-                                <field name="description" string="Description"/>
-                            </group>
-
-                            <group>
-                                <field name="bedrooms"/>
-                            </group>
-
-                            <group>
-                                <field name="living_area"/>
-                            </group>
-
-                            <group>
-                                <field name="facades"/>
-                            </group>
-
-                            <group>
-                                <field name="garage"/>
-                            </group>
-
-                            <group>
-                                <field name="garden"/>
-                            </group>
-
-                            <group>
-                                <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
-                            </group>
-
-                            <group>
-                                <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
-                            </group>
-
-                            <group>
-                                <field name="total_area"/>
-                            </group>
-                        </page>
-
-
-                        <!-- Offers -->
-                        <page string="Offers">
-                            <group>
-                                <field name="offer_ids" mode="tree" attrs="{'readonly': [('state', 'in', ['offer accepted', 'sold', 'canceled'])]}"/>
-                            </group>
-                        </page>
-
-
-                        <!-- Other Info -->
-                        <page string="Other Info">
-                            <group>
-                                <field name="seller_id"/>
-                                <field name="buyer_id"/>
-                            </group>
-                        </page>
-                    </notebook>
-
-
-
-                 <!-- <sheet>
-
-                    <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object"
-                            class="oe_stat_button" icon="fa-star">
-                            <div class="o_stat_info">
-                                <field name="active" class="o_stat_value"/>
-                                <span class="o_stat_text"> Leads</span>
-                            </div>
-                        </button>
-                    </div>
-
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
-                    <field name="active" invisible="1"/>
-
-                    <label for="postcode"/>
-                    <field name="postcode"/>
-
+                    <!-- Column right  -->
                     <group>
-                       
+                        <field name="expected_price" />
+                        <field name="best_price"/>
+                        <field name="selling_price"/>
+                    </group>
+                </group>
+                    
 
+                <notebook>
+                    <!-- Description -->
+                    <page string="Description">
                         <group>
-                            <group>
-                                <field name="expected_price" />
-                            </group>
-
-                            <group>
-                                <field name="date_availability" string="Available From"/>
-                            </group>
-
-                            <group>
-                                <field name="selling_price"/>
-                            </group>
+                            <field name="description" string="Description"/>
                         </group>
 
+                        <group>
+                            <field name="bedrooms"/>
+                        </group>
+
+                        <group>
+                            <field name="living_area"/>
+                        </group>
+
+                        <group>
+                            <field name="facades"/>
+                        </group>
+
+                        <group>
+                            <field name="garage"/>
+                        </group>
+
+                        <group>
+                            <field name="garden"/>
+                        </group>
+
+                        <group>
+                            <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                        </group>
+
+                        <group>
+                            <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
+                        </group>
+
+                        <group>
+                            <field name="total_area"/>
+                        </group>
+                    </page>
 
 
-                        <notebook>
-                            <page string="Description">
-                                <group>
-                                    <field name="description" string="Description"/>
-                                </group>
-
-                                <group>
-                                    <field name="bedrooms"/>
-                                </group>
-
-                                <group>
-                                    <field name="living_area" string="Living Area (sqm)"/>
-                                </group>
-
-                                <group>
-                                    <field name="facades"/>
-                                </group>
-
-                                <group>
-                                    <field name="garage"/>
-                                </group>
-
-                                <group>
-                                    <field name="garden"/>
-                                </group>
-
-                                <group>
-                                    <field name="garden_area" string="Garden Area (sqm)"/>
-                                </group>
-
-                                <group>
-                                    <field name="garden_orientation"/>
-                                </group>
-                            </page>
-                        </notebook>
-                    </group>
-                </sheet> -->
+                    <!-- Offers -->
+                    <page string="Offers">
+                        <group>
+                            <field name="offer_ids" mode="tree" attrs="{'readonly': [('state', 'in', ['offer accepted', 'sold', 'canceled'])]}"/>
+                        </group>
+                    </page>
 
 
-                <!-- <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_lost_leads" type="object"
-                            class="oe_stat_button" icon="fa-star">
-                            <div class="o_stat_info">
-                                <field name="leads_count" class="o_stat_value"/>
-                                <span class="o_stat_text"> Leads</span>
-                            </div>
-                        </button>
-                    </div>
-
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
-
-                    <div class="oe_title">
-                        <div class="oe_edit_only">
-                            <label for="name"/>
-                        </div>
-                        <h1 class="mb32">
-                            <field name="name" class="mb16"/>
-                        </h1>
-                        <field name="active" invisible="1"/>
-                    </div>
-                </sheet> -->
+                    <!-- Other Info -->
+                    <page string="Other Info">
+                        <group>
+                            <field name="seller_id"/>
+                            <field name="buyer_id"/>
+                        </group>
+                    </page>
+                </notebook>
 
             </form>
         </field>
@@ -269,12 +165,16 @@
                 <!-- <filter string="New Properties" name="new_properties" domain="['&#124', ('state','=','new'),('state','=','offer')]"/> -->
 
                 <group expand="0" string="Group By">
-                    <filter string="Postcode" name="group_by_postcode" 
-                    context="{'group_by': 'postcode', }"
+                    <filter 
+                        string="Postcode" 
+                        name="group_by_postcode" 
+                        context="{'group_by': 'postcode', }"
                     />
 
-                    <filter string="PropertyType" name="group_by_property_type" 
-                    context="{'group_by': 'property_type_id', }"
+                    <filter 
+                        string="PropertyType" 
+                        name="group_by_property_type" 
+                        context="{'group_by': 'property_type_id', }"
                     />
                 </group>
 

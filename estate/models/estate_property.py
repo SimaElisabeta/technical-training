@@ -3,8 +3,6 @@ from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError, ValidationError
 import logging
 
-# logging.info("This is a message for the console.")
-
 GARDEN_ORIENTATION_SELECTION = [
     ('north', 'North'),
     ('south', 'South'),
@@ -27,18 +25,14 @@ class EstateProperty(models.Model):
     _order = "id desc"
 
 
+
     ###################################################### GENERAL functions ######################################################
     def _default_date_availability(self):
         default_date = fields.Date.today() + relativedelta(months=3)
         return default_date
     
+    
 
-    def _get_accepted_offer(self):
-        for offer in self.offer_ids:
-            if offer.status == 'accepted':
-                return offer
-    
-    
     ###################################################### ESTATE PROPERTY - fields ######################################################
     name = fields.Char(required=True, default="Unknown", string = "Title")
     last_seen = fields.Datetime("Last Seen", default=lambda self: fields.Datetime.now())
@@ -50,13 +44,14 @@ class EstateProperty(models.Model):
     facades = fields.Integer()
     garage = fields.Boolean()
     garden = fields.Boolean()
+    active = fields.Boolean(default = True) # when active = fields.Boolean() -> if default is not specified the value will always be: default = False
     living_area = fields.Integer(string = "Living Area (sqm)")
     garden_area = fields.Integer(string = "Garden Area (sqm)")
+    
     garden_orientation = fields.Selection(
         selection = GARDEN_ORIENTATION_SELECTION,
         help = 'Select the orientation of the garden',
     )
-    active = fields.Boolean(default = True) # when active = fields.Boolean() -> if default is not specified the value will always be: default = False
     
     state = fields.Selection(
         string='Status',
@@ -114,6 +109,7 @@ class EstateProperty(models.Model):
         compute = "_compute_best_price"
     )
     
+
     ###################################################### ONCHANGE functions ######################################################
     '''
     ONCHANGE -> garden
@@ -127,6 +123,7 @@ class EstateProperty(models.Model):
             self.garden_area = 0    
             self.garden_orientation = None    
     
+
 
     ###################################################### COMPUTE functions ######################################################
     '''
@@ -147,6 +144,12 @@ class EstateProperty(models.Model):
         max_price = 0 if len(prices) == 0 else max(prices)
         self.best_price = max_price
 
+
+
+    def _get_accepted_offer(self):
+        for offer in self.offer_ids:
+            if offer.status == 'accepted':
+                return offer
 
     '''
     COMPUTE -> buyer_id
@@ -228,7 +231,6 @@ class EstateProperty(models.Model):
                     if property_record.selling_price < constrain_selling_price:
                         raise ValidationError("Test selling price must be at least 90% of the expected price. You must reduce the expected price if you want to accept this offer.")
 
-   
 
 
     ###################################################### SQL constraints - field ######################################################

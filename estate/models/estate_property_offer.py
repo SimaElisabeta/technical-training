@@ -31,8 +31,10 @@ class EstatePropertyOffer(models.Model):
         required=True, 
     )
     
-    property_type_id = fields.Integer(related="estate_property_id.property_type_id")
-       
+    property_type_id = fields.Many2one(
+        comodel_name='estate.property.type',
+        related="estate_property_id.property_type_id"
+    )
 
     validity = fields.Integer(
         string='Validity (days)',
@@ -45,11 +47,9 @@ class EstatePropertyOffer(models.Model):
         inverse = "_inverse_date_deadline",
     )
     
-    
-    
 
 
-    ###################################################### GENERAL functions ######################################################
+    ###################################################### BUTTONS functions ######################################################
     def action_offer_accepted(self):
         for offer in self:
             # if the state of the property is property.state='offer received', make changes on the status of the current offer (offer.status = 'accepted')
