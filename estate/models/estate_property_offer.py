@@ -49,6 +49,17 @@ class EstatePropertyOffer(models.Model):
     
 
 
+    ######################################################### CRUD methods ########################################################
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            data = self.env["estate_property"].browse(vals["estate_property_id"]).get_best_price()
+            if vals["price"] <= data:
+                raise UserError(f"The offer must be higher than: {data}")
+            return super(EstatePropertyOffer, self).create(vals)
+
+
+
     ###################################################### BUTTONS functions ######################################################
     def action_offer_accepted(self):
         for offer in self:

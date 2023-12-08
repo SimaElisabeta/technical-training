@@ -26,12 +26,16 @@ class EstateProperty(models.Model):
 
 
 
-    ###################################################### GENERAL functions ######################################################
+    ###################################################### DEFAULT functions ######################################################
     def _default_date_availability(self):
         default_date = fields.Date.today() + relativedelta(months=3)
         return default_date
     
-    
+
+    def get_best_price(self):
+        return self.best_price
+
+
 
     ###################################################### ESTATE PROPERTY - fields ######################################################
     name = fields.Char(required=True, default="Unknown", string = "Title")
@@ -109,6 +113,18 @@ class EstateProperty(models.Model):
         compute = "_compute_best_price"
     )
     
+    
+
+    ######################################################### CRUD methods ########################################################
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_state_new_or_canceled(self):
+        for property_record in self:
+            if property_record.state not in ['new', 'canceled']:
+                raise UserError("Only new and canceled properties can be deleted!")
+            if property_record.offer_ids:
+                property_record.offer_ids.unlink()
+
+
 
     ###################################################### ONCHANGE functions ######################################################
     '''
@@ -198,7 +214,7 @@ class EstateProperty(models.Model):
                     # when one offer is found set the property_record to 'offer accepted' and return out of the _computed() function
                     property_record.state = 'offer accepted'
                     return True
-                property_record.state = 'offer received'  
+                property_record.state = 'offer received'
 
     
     def set_state_sold(self):
