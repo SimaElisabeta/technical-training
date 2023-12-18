@@ -8,7 +8,7 @@
     </record>
 
      <record id="estate_property_tag_view_tree" model="ir.ui.view">
-        <field name="name">estate.property.tag.tree</field>
+        <field name="name">estate.property.tag.view.tree</field>
         <field name="model">estate.property.tag</field>
         <field name="arch" type="xml">
             <tree string="Tests" editable="top">

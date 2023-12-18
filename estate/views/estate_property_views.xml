@@ -4,14 +4,15 @@
     <record id="estate_property_action" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">estate_property</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
  
         <!-- default seach filter  -->
         <!-- <field name="context">{'search_default_date_availability': True}</field> -->
+        <!-- <field name="context">{'group_by': 'property_type_id', }</field> -->
     </record>
 
     <record id="estate_property_view_tree" model="ir.ui.view">
-        <field name="name">estate.property.tree</field>
+        <field name="name">estate.property.view.tree</field>
         <field name="model">estate_property</field>
         <field name="arch" type="xml">
             <tree decoration-success="state=='offer received' or state=='offer accepted'" decoration-bf="state=='offer accepted'" decoration-muted="state=='sold'">
@@ -33,7 +34,7 @@
 
 
     <record id="estate_property_view_form" model="ir.ui.view">
-        <field name="name">estate.property.form</field>
+        <field name="name">estate.property.view.form</field>
         <field name="model">estate_property</field>
         <field name="arch" type="xml">
            
@@ -141,9 +142,42 @@
         </field>
     </record>
 
+    <record id="estate_property_view_kanban" model="ir.ui.view">
+        <field name="name">estate.property.view.kanban</field>
+        <field name="model">estate_property</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="property_type_id" records_draggable="0">
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <h3> 
+                                <field name="name"/>
+                            </h3>
+                            
+                            <div>
+                                Expected price: <field name="expected_price"/><br></br>
+                                
+                                <t t-if="record.best_price.raw_value != 0"> 
+                                    Best Offer: <field name="best_price"/> 
+                                </t><br></br>
+
+                                <b class="text-success" t-if="record.selling_price.raw_value != 0"> 
+                                    Selling Price: <field name="selling_price"/> 
+                                </b>
+                                
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> 
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
 
     <record id="estate_property_view_search" model="ir.ui.view">
-        <field name="name">estate.property.search</field>
+        <field name="name">estate.property.view.search</field>
         <field name="model">estate_property</field>
         <field name="arch" type="xml">
             <search string="Tests">
