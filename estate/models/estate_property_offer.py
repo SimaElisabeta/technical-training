@@ -13,6 +13,9 @@ class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Estate Property Offer"
     _order = "price desc"
+    _sql_constraints = [
+        ("check_price", "CHECK(price > 0)", "The price must be strictly positive"),
+    ]
 
 
     ###################################################### ESTATE PROPERTY OFFER - fields ######################################################
@@ -109,11 +112,4 @@ class EstatePropertyOffer(models.Model):
         # Inverting the date into a number/int and set the validity with the new value
         for offer in self:
             offer.validity = (offer.date_deadline - fields.Date.today()).days
-    
-
-
-    ###################################################### SQL constraints - field ######################################################
-    # _sql_constraints = [
-    #         ('check_positive_offer_price', 'CHECK(price > 0)', 'The offer price must be strictly positive.')
-    #     ]
     

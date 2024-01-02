@@ -1,0 +1,4 @@
+id                   ,partner_id:id       ,estate_property_id:id     ,price   ,validity
+property_big_villa_1 ,base.res_partner_12 ,estate.property_big_villa ,  10000 ,      14
+property_big_villa_2 ,base.res_partner_12 ,estate.property_big_villa ,1500000 ,      14
+property_big_villa_3 ,base.res_partner_2  ,estate.property_big_villa ,1500001 ,      14

@@ -8,6 +8,8 @@ class EstateProperty(models.Model):
     def set_state_sold(self):
         super().set_state_sold()
 
+        print(" reached ".center(100, '='))
+
         for property in self:
             invoice_vals = {
                 'move_type': 'out_invoice',
@@ -20,4 +22,7 @@ class EstateProperty(models.Model):
                     ]
             }
 
-            self.env['account.move'].create(invoice_vals)
+            self.check_access_rights("write")
+            self.check_access_rule("write")
+
+            self.env['account.move'].sudo().create(invoice_vals)

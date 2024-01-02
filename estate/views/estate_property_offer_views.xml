@@ -11,7 +11,7 @@
         <field name="name">estate.property.offer.view.tree</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <tree string="Tests" editable="top" decoration-danger="status=='refused'" decoration-success="status=='accepted'">
+            <tree string="Property Offers" editable="top" decoration-danger="status=='refused'" decoration-success="status=='accepted'">
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="validity"/>

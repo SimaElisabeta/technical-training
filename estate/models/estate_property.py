@@ -23,8 +23,10 @@ class EstateProperty(models.Model):
     _name = "estate_property"
     _description = "Estate Property App"
     _order = "id desc"
-
-
+    _sql_constraints = [
+        ("check_expected_price", "CHECK(expected_price > 0)", "The expected price must be strictly positive"),
+        ("check_selling_price", "CHECK(selling_price >= 0)", "The offer price must be positive"),
+    ]
 
     ###################################################### DEFAULT functions ######################################################
     def _default_date_availability(self):
@@ -51,6 +53,13 @@ class EstateProperty(models.Model):
     active = fields.Boolean(default = True) # when active = fields.Boolean() -> if default is not specified the value will always be: default = False
     living_area = fields.Integer(string = "Living Area (sqm)")
     garden_area = fields.Integer(string = "Garden Area (sqm)")
+
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        ondelete='restrict',
+        default=lambda self: self.env.user.company_id,
+        required=True
+    )
     
     garden_orientation = fields.Selection(
         selection = GARDEN_ORIENTATION_SELECTION,
@@ -137,7 +146,7 @@ class EstateProperty(models.Model):
             self.garden_orientation = 'north'
         else:
             self.garden_area = 0    
-            self.garden_orientation = None    
+            self.garden_orientation = False    
     
 
 
@@ -157,9 +166,11 @@ class EstateProperty(models.Model):
     @api.depends("offer_ids")
     def _compute_best_price(self):
         for property_record in self:
-            prices = property_record.offer_ids.mapped('price')
-            max_price = 0 if len(prices) == 0 else max(prices)
-            property_record.best_price = max_price
+            property_record.best_price = max(property_record.offer_ids.mapped("price")) if property_record.offer_ids else 0.0
+        # for property_record in self:
+        #     prices = property_record.offer_ids.mapped('price')
+        #     max_price = 0 if len(prices) == 0 else max(prices)
+        #     property_record.best_price = max_price
 
 
 
@@ -245,13 +256,6 @@ class EstateProperty(models.Model):
             for offer in self.offer_ids:
                 if offer.status == 'accepted':
                     constrain_selling_price = property_record.expected_price * 0.9
+                    print(property_record.selling_price)
                     if property_record.selling_price < constrain_selling_price:
                         raise ValidationError("Test selling price must be at least 90% of the expected price. You must reduce the expected price if you want to accept this offer.")
-
-
-
-    ###################################################### SQL constraints - field ######################################################
-    # _sql_constraints = [
-    #         ('check_positive_expected_price', 'CHECK(expected_price > 0)', 'The expected price must be strictly positive.'),
-    #         ('check_positive_selling_price', 'CHECK(selling_price >= 0)', 'The selling price must be positive.'),
-    #     ]

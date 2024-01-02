@@ -5,6 +5,9 @@ class EstateProperty(models.Model):
     _name = "estate.property.type"
     _description = "Estate Property Type"
     _order = "sequence, name"
+    _sql_constraints = [
+        ("check_name", "UNIQUE(name)", "The name must be unique"),
+    ]
     
     name = fields.Char(required=True, default="Unknown")
     sequence = fields.Integer(name='Sequence', default=1)
@@ -41,9 +44,3 @@ class EstateProperty(models.Model):
             'target': 'current',
             'type': 'ir.actions.act_window',
         }
-
-###################################################### SQL constraints - field ######################################################
-# _sql_constraints = [
-#         ('check_', 'UNIQUE(name)', 'The property type name must be unique.')
-#     ]
-
