@@ -1,6 +1,7 @@
 from odoo import fields, models, api
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare, float_is_zero
 import logging
 
 GARDEN_ORIENTATION_SELECTION = [
@@ -199,13 +200,15 @@ class EstateProperty(models.Model):
     '''
     @api.depends("offer_ids.status")
     def _compute_selling_price(self):
-        self.selling_price = 0
+        #self.selling_price = 0
 
         for property_record in self:  
             accepted_offer = property_record._get_accepted_offer()
 
             if accepted_offer:
                 property_record.selling_price = accepted_offer.price
+            else:
+                property_record.selling_price = 0
 
 
     '''
@@ -231,12 +234,18 @@ class EstateProperty(models.Model):
     
     def set_state_sold(self):
         for property_record in self:
-            if property_record.state == 'sold':
-                return True
+            # if property_record.state == 'sold':
+            #     return True
+            if "canceled" in self.mapped("state"):
+                raise UserError("Canceled properties cannot be sold.")   
+            if not any(offer.status == 'accepted' for offer in self.offer_ids):
+                raise UserError("Cannot sell a property that doesn't have an accepted offer.")
+            return self.write({"state": "sold"})
 
-            if property_record.state == 'canceled':
-                raise UserError('Canceled properties cannot be sold')
-            property_record.state = 'sold'
+        #     property_record.state = 'sold'
+            
+        # if not any(offer.status == 'accepted' for offer in self.offer_ids):
+        #     raise UserError("Cannot sell a property that doesn't have an accepted offer.")
         
     def set_state_canceled(self):
         for property_record in self:
@@ -253,9 +262,25 @@ class EstateProperty(models.Model):
     @api.constrains('selling_price', 'expected_price')
     def _validate_selling_price(self):
         for property_record in self:
-            for offer in self.offer_ids:
-                if offer.status == 'accepted':
-                    constrain_selling_price = property_record.expected_price * 0.9
-                    print(property_record.selling_price)
-                    if property_record.selling_price < constrain_selling_price:
-                        raise ValidationError("Test selling price must be at least 90% of the expected price. You must reduce the expected price if you want to accept this offer.")
+            if (
+                not float_is_zero(property_record.selling_price, precision_rounding=0.01)
+                and float_compare(property_record.selling_price, property_record.expected_price * 90.0 / 100.0, precision_rounding=0.01) < 0
+            ):
+                raise ValidationError(
+                    "The selling price must be at least 90% of the expected price! "
+                    + "You must reduce the expected price if you want to accept this offer."
+                )
+        # for property_record in self:
+        #     for offer in self.offer_ids:
+
+        #         if offer.status == 'accepted':
+        #             constrain_selling_price = property_record.expected_price * 0.9
+        #             print(property_record.selling_price)
+        #             print(property_record.expected_price)
+        #             print(constrain_selling_price)
+        #             if offer.price < constrain_selling_price:
+        #                 raise ValidationError("Test selling price must be at least 90% of the expected price. You must reduce the expected price if you want to accept this offer.")
+    
+
+
+        

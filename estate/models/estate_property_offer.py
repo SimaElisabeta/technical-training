@@ -1,6 +1,7 @@
 from odoo import fields, models, api
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
+from odoo.tools import float_compare
 import logging
 
 STATUS_SELECTION = [
@@ -56,12 +57,32 @@ class EstatePropertyOffer(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            data = self.env["estate_property"].browse(vals["estate_property_id"]).get_best_price()
-            if vals["price"] <= data:
-                raise UserError(f"The offer must be higher than: {data}")
-        return super(EstatePropertyOffer, self).create(vals_list)
+            if vals.get("estate_property_id") and vals.get("price"):
+                prop = self.env["estate_property"].browse(vals["estate_property_id"])
+                # We check if the offer is higher than the existing offers
+                if prop.offer_ids:
+                    max_offer = max(prop.mapped("offer_ids.price"))
+                    if float_compare(vals["price"], max_offer, precision_rounding=0.01) <= 0:
+                        raise UserError("The offer must be higher than %.2f" % max_offer)
+                if prop.state in ['sold', 'canceled']:
+                    raise UserError("You cannot make an offer on a sold/canceled property")
+                prop.state = "offer received"
+        return super().create(vals_list)
+    
+    # @api.model_create_multi
+    # def create(self, vals_line):
+    #     current_property_id = vals_line[0]["estate_property_id"]
+    #     current_property_state = self.env["estate_property"].browse(current_property_id).state
+    #     best_price = self.env["estate_property"].browse(current_property_id).get_best_price()
 
+    #     print(f'---------CURRENT PROPERTY STATE--------- ID:{current_property_id}, {current_property_state}')
+    #     if current_property_state in ['sold', 'canceled']:
+    #         raise UserError("You cannot make an offer on a sold/canceled property")
 
+    #     if vals_line[0]["price"] <= best_price:
+    #         raise UserError(f"The offer must be higher than: {best_price}")
+        
+    #     return super().create(vals_line)
 
     ###################################################### BUTTONS functions ######################################################
     def action_offer_accepted(self):

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Sub-template -->
+    <template id="report_property_offers_template" inherit_id="estate.report_property_offers_template">
+        <span t-field="property.state" position="after">
+            <t t-if="property.invoice_id">
+                <strong class="text-success">!! An invoice has already been created !!</strong>
+            </t>
+        </span>
+    </template>
+
+</odoo>

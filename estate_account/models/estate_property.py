@@ -5,6 +5,10 @@ from odoo import Command
 class EstateProperty(models.Model):
     _inherit="estate_property"
 
+    invoice_id = fields.Many2one(
+        comodel_name='account.move',
+    )
+    
     def set_state_sold(self):
         super().set_state_sold()
 
@@ -25,4 +29,4 @@ class EstateProperty(models.Model):
             self.check_access_rights("write")
             self.check_access_rule("write")
 
-            self.env['account.move'].sudo().create(invoice_vals)
+            property.invoice_id = self.env['account.move'].sudo().create(invoice_vals)
