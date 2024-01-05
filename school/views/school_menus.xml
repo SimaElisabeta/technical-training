@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <menuitem id="school_root" name="School Main">
+
+        <!-- First level menu1 -->
+        <menuitem id="school_menu1" name="Schools Menu">
+            <!-- Action menu-->
+            <menuitem id="school_model_menu" action="school_action"/>
+            <menuitem id="school_res_partner_model_menu" action="school_res_partner_action"/>
+            <menuitem id="school_class_location_model_menu" action="school_class_location_action"/>
+            <menuitem id="school_class_model_menu" action="school_class_action"/>
+            <menuitem id="school_schedule_model_menu" action="school_schedule_action"/>
+        </menuitem>
+    </menuitem>
+</odoo> 

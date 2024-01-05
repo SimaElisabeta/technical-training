@@ -14,3 +14,8 @@ class Partner(models.Model):
         ondelete='restrict',
     )
     
+    school_course_teacher_ids = fields.One2many(
+        comodel_name='school.courses.teachers',
+        inverse_name='teacher_id',
+    )
+    

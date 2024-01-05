@@ -11,6 +11,7 @@ class SchoolClass(models.Model):
         ondelete='restrict',
     )
 
+    # DIRIGINTE
     teacher_id = fields.Many2one(
         comodel_name='res.partner',
         ondelete='restrict',

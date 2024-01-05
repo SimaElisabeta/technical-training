@@ -1,0 +1,81 @@
+<odoo>
+    <record id="school_action" model="ir.actions.act_window">
+        <field name="name">Schools</field>
+        <field name="res_model">school</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="view_mode">tree,form,kanban</field> -->
+    </record>
+
+    <!-- Tree  -->
+    <record id="school_view_tree" model="ir.ui.view">
+        <field name="name">school.view.tree</field>
+        <field name="model">school</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Form  -->
+    <record id="school_view_form" model="ir.ui.view">
+        <field name="name">school.view.form</field>
+        <field name="model">school</field>
+        <field name="arch" type="xml">
+           
+            <form string="School" create="1" >
+                
+                <!-- Header buttons  -->
+                <!-- <header>
+                    <button name="set_state_sold" type="object" string="sold" states="new,offer received,offer accepted,"/>
+                    <button name="set_state_canceled" type="object" string="cancel" states="new,offer received,offer accepted,"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold"/>
+                </header> -->
+                
+
+                <!-- Name title-->
+                <div class="oe_title">
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                </div>
+
+
+                <!-- <group> -->
+                    <!-- Column left  -->
+                    <!-- <group></group> -->
+
+                    <!-- Column right  -->
+                    <!-- <group></group> -->
+                <!-- </group> -->
+                    
+
+                <notebook>
+                    <page name="class_ids" string="Classes">
+                        <field name="class_ids"/>
+                    </page>
+
+                    <page name="class_location_ids" string="Class Locations">
+                        <field name="class_location_ids"/>
+                    </page>
+
+                    <page name="school_courses_teacher_ids" string="Teachers/Courses">
+                        <field name="school_courses_teacher_ids">
+                            <tree>
+                                <field name="teacher_id"/>
+                                <field name="course_id"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page name="schedule_ids" string="Schedule">
+                        <field name="schedule_ids"/>
+                    </page>
+                </notebook>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

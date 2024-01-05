@@ -34,10 +34,10 @@ class SchoolSchedule(models.Model):
     day = fields.Selection(
         selection=[
             ('mon', 'Monday'), 
-            ('tue', 'Tuesday')
-            ('wed', 'Wednesday')
-            ('thu', 'Thursday')
-            ('fri', 'Friday')
+            ('tue', 'Tuesday'),
+            ('wed', 'Wednesday'),
+            ('thu', 'Thursday'),
+            ('fri', 'Friday'),
             ]
     )
 
@@ -54,7 +54,7 @@ class SchoolSchedule(models.Model):
             if schedule.stop < 1 or schedule.stop > 23:
                 raise ValidationError("Stop hour must be in between 1-23")
             if schedule.stop <= schedule.start:
-                raise ValidationError("Stop hour must be grater than Start hour")
+                raise ValidationError("Stop hour must be greater than Start hour")
 
     
     

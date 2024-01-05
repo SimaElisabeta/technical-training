@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+school.access_school_class_location,access_school_class_location,school.model_school_class_location,base.group_user,1,1,1,1
+school.access_school_class,access_school_class,school.model_school_class,base.group_user,1,1,1,1
+school.access_school_courses,access_school_courses,school.model_school_courses,base.group_user,1,1,1,1
+school.access_school_courses_teachers,access_school_courses_teachers,school.model_school_courses_teachers,base.group_user,1,1,1,1
+school.access_school_schedule,access_school_schedule,school.model_school_schedule,base.group_user,1,1,1,1
+school.access_school,access_school,school.model_school,base.group_user,1,1,1,1
