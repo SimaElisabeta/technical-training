@@ -5,6 +5,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+
     <!-- Tree  -->
     <record id="school_res_partner_view_tree" model="ir.ui.view">
         <field name="name">school.view.tree</field>
@@ -36,9 +37,21 @@
 
                         <field name="is_student" attrs="{'readonly': ['|', ('is_teacher', '=', True), ('is_parent', '=', True)]}"/>
 
-                        <field name="class_id" attrs="{'readonly': [('is_student', '=', False)]}"/>
+                        <field name="school_id" attrs="{'readonly': [('is_student', '!=', True)]}"/>
+                        <field name="class_id" attrs="{'readonly': [('is_student', '!=', True)]}"/>
+                    </group>
+                </page>
 
-                        <field name="school_course_teacher_ids"/>
+                <page string="Teacher Roles in Schools" name="school_course_teacher" attrs="{'invisible': [('is_teacher', '=', False)]}">
+                    <group>
+                        <group>
+                            <field name="school_course_teacher_ids">
+                                <tree>
+                                    <field name="course_id"/>
+                                    <field name="school_id"/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
                 </page>
             </xpath>
@@ -61,7 +74,8 @@
             </filter>
 
             <filter name="group_country" position="after">
-                    <filter string="Class" name="class_id" context="{'group_by': 'class_id'}"/>
+                <filter string="School" name="class_id" context="{'group_by': 'school_id'}"/>
+                <filter string="Class" name="class_id" context="{'group_by': 'class_id'}"/>
             </filter>
         </field>
     </record>

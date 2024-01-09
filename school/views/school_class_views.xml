@@ -3,7 +3,11 @@
         <field name="name">Class</field>
         <field name="res_model">school.class</field>
         <field name="view_mode">tree,form</field>
+
+        <!-- default seach filter  -->
+        <field name="context">{'group_by': 'school_id'}</field>
     </record>
+
 
     <!-- Tree  -->
     <record id="school_class_view_tree" model="ir.ui.view">
@@ -40,12 +44,29 @@
 
 
                 <notebook>
-                    <page name="student_ids" string="Students">
-                        <field name="student_ids"/>
+                    <page name="student_ids" string="All Students attending:">
+                        <field name="student_ids">
+                            <tree>
+                                <field name="name" string="Name"/>
+                                <!-- <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/> -->
+                            </tree>
+                        </field>
                     </page>
                 </notebook>
 
             </form>
+        </field>
+    </record>
+
+
+    <!-- Search  -->
+    <record id="school_class_view_search" model="ir.ui.view">
+        <field name="name">school.class.view.search</field>
+        <field name="model">school.class</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <filter string="School" name="class_id" context="{'group_by': 'school_id'}"/>
+            </search>
         </field>
     </record>
 

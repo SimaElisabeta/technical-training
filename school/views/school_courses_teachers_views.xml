@@ -1,0 +1,60 @@
+<odoo>
+    <record id="school_courses_teachers_action" model="ir.actions.act_window">
+        <field name="name">Course Teacher Roles</field>
+        <field name="res_model">school.courses.teachers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Tree  -->
+    <record id="school_courses_teachers_view_tree" model="ir.ui.view">
+        <field name="name">school.courses.teachers.view.tree</field>
+        <field name="model">school.courses.teachers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="display_name" readonly="1"/>
+                <field name="school_id"/>
+                <!-- <field name="teacher_id"/>
+                <field name="course_id"/> -->
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Form  -->
+    <record id="school_courses_teachers_view_form" model="ir.ui.view">
+        <field name="name">school.courses.teachers.view.form</field>
+        <field name="model">school.courses.teachers</field>
+        <field name="arch" type="xml">
+           
+            <form string="School Course Teacher Roles" create="1" >
+                <div class="oe_title">
+                    <h1>
+                        <field name="display_name" readonly="1"/>
+                    </h1>
+                </div>
+                
+                <group>
+                    <field name="school_id"/>
+                    <field name="teacher_id"/>
+                    <field name="course_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Search  -->
+    <record id="school_courses_teachers_view_search" model="ir.ui.view">
+        <field name="name">school.courses.teachers.view.search</field>
+        <field name="model">school.courses.teachers</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <filter string="School" name="class_id" context="{'group_by': 'school_id'}"/>
+                <filter string="Teacher" name="teacher_id" context="{'group_by': 'teacher_id'}"/>
+                <filter string="Course" name="course_id" context="{'group_by': 'course_id'}"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

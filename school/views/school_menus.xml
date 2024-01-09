@@ -12,5 +12,13 @@
             <menuitem id="school_class_model_menu" action="school_class_action"/>
             <menuitem id="school_schedule_model_menu" action="school_schedule_action"/>
         </menuitem>
+        
+         <!-- First level menu2 -->
+        <menuitem id="school_menu2" name="Settings">
+            <!-- Action menu-->
+            <menuitem id="school_courses_model_menu" action="school_courses_action"/>
+            <menuitem id="school_courses_teachers_model_menu" action="school_courses_teachers_action"/>
+        </menuitem>
+        
     </menuitem>
 </odoo> 

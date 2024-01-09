@@ -13,6 +13,7 @@ class SchoolClass(models.Model):
 
     # DIRIGINTE
     teacher_id = fields.Many2one(
+        string='Class Master',
         comodel_name='res.partner',
         ondelete='restrict',
         domain=[('is_teacher','=',True)]

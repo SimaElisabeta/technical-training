@@ -16,7 +16,7 @@ class School(models.Model):
         inverse_name='school_id',
     )
 
-    school_courses_teacher_ids = fields.One2many(
+    school_course_teacher_ids = fields.One2many(
         comodel_name='school.courses.teachers',
         inverse_name='school_id',
     )

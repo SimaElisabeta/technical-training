@@ -8,10 +8,15 @@ class Partner(models.Model):
     is_parent = fields.Boolean()
     is_student = fields.Boolean()
     
+    school_id = fields.Many2one(
+        comodel_name='school',
+        ondelete='restrict',
+    )
     
     class_id = fields.Many2one(
         comodel_name='school.class',
         ondelete='restrict',
+        domain="[('school_id', '=', school_id)]"
     )
     
     school_course_teacher_ids = fields.One2many(

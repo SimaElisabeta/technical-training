@@ -5,13 +5,21 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+
     <!-- Tree  -->
     <record id="school_schedule_view_tree" model="ir.ui.view">
         <field name="name">school.schedule.view.tree</field>
         <field name="model">school.schedule</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="school_course_teacher_id"/>
                 <field name="school_id"/>
+                <field name="teacher_id"/>
+                <field name="course_id"/>
+                <field name="location_id"/>
+                <field name="day"/>
+                <field name="start"/>
+                <field name="stop"/>
             </tree>
         </field>
     </record>
@@ -24,7 +32,22 @@
         <field name="arch" type="xml">
            
             <form string="School Schedule" create="1" >
-                <field name="school_course_teacher_id"/>
+                <group>
+                    <group>
+                        <field name="school_course_teacher_id"/>
+
+                        <field name="school_id"/>
+                        <field name="teacher_id"/>
+                        <field name="course_id"/>
+                    </group>
+
+                    <group>
+                        <field name="location_id"/>
+                        <field name="day"/>
+                        <field name="start"/>
+                        <field name="stop"/>
+                    </group>
+                </group>
             </form>
         </field>
     </record>

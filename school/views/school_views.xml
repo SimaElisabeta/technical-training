@@ -6,6 +6,7 @@
         <!-- <field name="view_mode">tree,form,kanban</field> -->
     </record>
 
+
     <!-- Tree  -->
     <record id="school_view_tree" model="ir.ui.view">
         <field name="name">school.view.tree</field>
@@ -41,27 +42,26 @@
                     </h1>
                 </div>
 
-
-                <!-- <group> -->
-                    <!-- Column left  -->
-                    <!-- <group></group> -->
-
-                    <!-- Column right  -->
-                    <!-- <group></group> -->
-                <!-- </group> -->
-                    
-
+           
                 <notebook>
                     <page name="class_ids" string="Classes">
-                        <field name="class_ids"/>
+                        <field name="class_ids">
+                            <tree>
+                                <field name="name"/>
+                            </tree>
+                        </field>
                     </page>
 
                     <page name="class_location_ids" string="Class Locations">
-                        <field name="class_location_ids"/>
+                        <field name="class_location_ids">
+                            <tree>
+                                <field name="name"/>
+                            </tree>
+                        </field>
                     </page>
 
-                    <page name="school_courses_teacher_ids" string="Teachers/Courses">
-                        <field name="school_courses_teacher_ids">
+                    <page name="school_course_teacher_ids" string="Teachers/Courses">
+                        <field name="school_course_teacher_ids">
                             <tree>
                                 <field name="teacher_id"/>
                                 <field name="course_id"/>
@@ -70,8 +70,18 @@
                     </page>
 
                     <page name="schedule_ids" string="Schedule">
-                        <field name="schedule_ids"/>
+                        <field name="schedule_ids">
+                            <tree>
+                                <field name="teacher_id"/>
+                                <field name="course_id"/>
+                                <field name="location_id"/>
+                                <field name="day"/>
+                                <field name="start"/>
+                                <field name="stop"/>
+                            </tree>
+                        </field>
                     </page>
+
                 </notebook>
 
             </form>
