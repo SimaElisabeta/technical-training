@@ -3,6 +3,9 @@
         <field name="name">Schedule</field>
         <field name="res_model">school.schedule</field>
         <field name="view_mode">tree,form</field>
+
+        <!-- default seach filter  -->
+        <field name="context">{'group_by': 'school_id'}</field>
     </record>
 
 
@@ -17,6 +20,7 @@
                 <field name="teacher_id"/>
                 <field name="course_id"/>
                 <field name="location_id"/>
+                <field name="class_id"/>
                 <field name="day"/>
                 <field name="start"/>
                 <field name="stop"/>
@@ -43,12 +47,36 @@
 
                     <group>
                         <field name="location_id"/>
+                        <field name="class_id"/>
                         <field name="day"/>
                         <field name="start"/>
                         <field name="stop"/>
                     </group>
                 </group>
             </form>
+        </field>
+    </record>
+
+
+
+    <!-- Search  -->
+    <record id="school_schedule_view_search" model="ir.ui.view">
+        <field name="name">school.schedule.view.search</field>
+        <field name="model">school.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <!-- Filters  -->
+                <filter string="Monday" name="monday_courses" domain="[('day', '=', 'mon')]"/>
+                <filter string="Tuesday" name="tuesday_courses" domain="[('day', '=', 'tue')]"/>
+                <filter string="Wednesday" name="wednesday_courses" domain="[('day', '=', 'wed')]"/>
+                <filter string="Thursday" name="thursday_courses" domain="[('day', '=', 'thu')]"/>
+                <filter string="Friday" name="friday_courses" domain="[('day', '=', 'fri')]"/>
+
+                <!-- Groups  -->
+                <group expand="0" string="Group By">
+                    <filter string="School" name="class_id" context="{'group_by': 'school_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

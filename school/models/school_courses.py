@@ -48,7 +48,7 @@ class SchoolCoursesTeachers(models.Model):
     def _compute_display_name(self):
         for record in self:
             combined_name = f"{record.course_id.name} by {record.teacher_id.name}"
-            record.display_name = '' if 'False' in combined_name else combined_name
+            record.display_name = 'New' if 'False' in combined_name else combined_name
     
     def name_get(self):
         res = []

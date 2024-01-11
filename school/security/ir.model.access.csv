@@ -5,3 +5,5 @@ school.access_school_courses,access_school_courses,school.model_school_courses,b
 school.access_school_courses_teachers,access_school_courses_teachers,school.model_school_courses_teachers,base.group_user,1,1,1,1
 school.access_school_schedule,access_school_schedule,school.model_school_schedule,base.group_user,1,1,1,1
 school.access_school,access_school,school.model_school,base.group_user,1,1,1,1
+school.access_school_attendance,access_school_attendance,school.model_school_attendance,base.group_user,1,1,1,1
+school.access_school_catalog,access_school_catalog,school.model_school_catalog,base.group_user,1,1,1,1

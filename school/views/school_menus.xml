@@ -13,12 +13,22 @@
             <menuitem id="school_schedule_model_menu" action="school_schedule_action"/>
         </menuitem>
         
-         <!-- First level menu2 -->
-        <menuitem id="school_menu2" name="Settings">
+        <!-- First level menu2 -->
+        <menuitem id="school_menu2" name="Attendance">
+            <menuitem id="school_attendance_model_menu" action="school_attendance_action"/>
+        </menuitem>
+
+        <!-- First level menu3 -->
+        <menuitem id="school_menu3" name="Catalog">
+            <menuitem id="school_catalog_model_menu" action="school_catalog_action"/>
+        </menuitem>
+
+        <!-- First level menu4 -->
+        <menuitem id="school_menu4" name="Settings">
             <!-- Action menu-->
             <menuitem id="school_courses_model_menu" action="school_courses_action"/>
             <menuitem id="school_courses_teachers_model_menu" action="school_courses_teachers_action"/>
         </menuitem>
-        
+
     </menuitem>
 </odoo> 

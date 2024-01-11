@@ -14,6 +14,8 @@
         "views/school_schedule_views.xml",
         "views/school_courses_views.xml",
         "views/school_courses_teachers_views.xml",
+        "views/school_attendance_views.xml",
+        "views/school_catalog_views.xml",
         "views/school_menus.xml",
     ],
     "demo": [

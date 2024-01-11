@@ -24,3 +24,8 @@ class Partner(models.Model):
         inverse_name='teacher_id',
     )
     
+    student_catalog_grade_ids = fields.One2many(
+        comodel_name='school.catalog',
+        inverse_name='student_id',
+    )
+    

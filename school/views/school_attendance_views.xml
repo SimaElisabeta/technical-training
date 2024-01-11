@@ -1,0 +1,24 @@
+<odoo>
+    <record id="school_attendance_action" model="ir.actions.act_window">
+        <field name="name">Students Class Attendance</field>
+        <field name="res_model">school.attendance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Tree  -->
+    <record id="school_attendance_view_tree" model="ir.ui.view">
+        <field name="name">school.attendance.view.tree</field>
+        <field name="model">school.attendance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="student_id"/>
+                <field name="teacher_id"/>
+                <field name="course_id"/>
+                <field name="date"/>
+                <field name="is_present"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
