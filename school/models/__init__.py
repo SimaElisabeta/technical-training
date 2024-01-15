@@ -6,3 +6,4 @@ from . import school_class
 from . import school_courses
 from . import school_schedule
 from . import school_school
+from . import res_config_settings

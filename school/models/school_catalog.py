@@ -11,8 +11,16 @@ class SchoolCatalog(models.Model):
         ondelete='restrict',
         domain=[('is_student','=',True)]
     )
+    class_id = fields.Many2one(
+       related="student_id.class_id",
+        store=True
+    )
 
-    grade = fields.Integer()
+    grade = fields.Float(
+        group_operator="avg",
+        digits=(16, 2),
+        # digits='Product Price',
+    )
 
     date = fields.Date(
         default=fields.Date.context_today,
@@ -35,6 +43,7 @@ class SchoolCatalog(models.Model):
        related="school_course_teacher_id.course_id",
         store=True
     )
+    
     
 
 

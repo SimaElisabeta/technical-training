@@ -99,6 +99,6 @@ class SchoolSchedule(models.Model):
     def name_get(self):
         result = []
         for schedule in self:
-            name = f"{schedule.day.capitalize()} - {schedule.school_course_teacher_id.display_name}"
+            name = f"{schedule.day.capitalize()} - {schedule.school_course_teacher_id.display_name} - At class: {schedule.class_id.name}"
             result.append((schedule.id, name))
         return result

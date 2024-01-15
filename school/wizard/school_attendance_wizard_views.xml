@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="school_attendance_wizard_action" model="ir.actions.act_window">
+            <field name="name">Create Attendances</field>
+            <field name="res_model">school.attendance.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="school_attendance_wizard_view_form" model="ir.ui.view">
+            <field name="name">school.attendance.wizard.view.form</field>
+            <field name="model">school.attendance.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date"/>
+                        <field name="schedule_id"/>
+                    </group>
+                    
+
+                    <notebook attrs="{'invisible': [('schedule_id', '=', '')]}">
+                        <page name="wizard_line_ids" string="Students">
+                            <field name="wizard_line_ids" >
+                                <tree editable="bottom">
+                                    <field name="student_id" />
+                                    <field name="is_present" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <footer>
+                        <button name="action_create_lines" string="Get students" type="object"  class="oe_highlight" />
+                        <button name="action_clear_lines" string="Clear students" type="object"  class="oe_highlight danger" />
+                        <button name="action_register_attendance" string="Register Attendances" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -3,7 +3,7 @@
     "version": "16.0",  # Version
     # "category": "Real Estate/Brokerage", # Category for security
     "application": True,  # This line says the module is an App, and not a module
-    "depends": ["base"],  # dependencies
+    "depends": ["base", "mail"],  # dependencies
     "data": [
         "security/ir.model.access.csv",
 
@@ -16,6 +16,10 @@
         "views/school_courses_teachers_views.xml",
         "views/school_attendance_views.xml",
         "views/school_catalog_views.xml",
+        "views/res_config_settings_views.xml",
+
+        "wizard/school_attendance_wizard_views.xml",
+
         "views/school_menus.xml",
     ],
     "demo": [

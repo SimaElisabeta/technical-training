@@ -2,7 +2,7 @@
     <record id="school_catalog_action" model="ir.actions.act_window">
         <field name="name">Catalog</field>
         <field name="res_model">school.catalog</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,pivot</field>
     </record>
 
 
@@ -18,6 +18,23 @@
                 <field name="date"/>
                 <field name="grade"/>
             </tree>
+        </field>
+    </record>
+
+
+    <!-- Pivot  -->
+    <record id="school_catalog_view_pivot_website" model="ir.ui.view">
+        <field name="name">school.catalog.view.pivot.website</field>
+        <field name="model">school.catalog</field>
+        <field name="arch" type="xml">
+            <pivot string="Grades Avarage" sample="1">
+                <field name="school_id" type="row"/>
+                <field name="class_id" type="row"/>
+                <field name="student_id" type="row"/>
+                <field name="course_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="grade" type="measure"/>
+            </pivot>
         </field>
     </record>
 

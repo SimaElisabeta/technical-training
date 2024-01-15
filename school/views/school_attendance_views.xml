@@ -1,8 +1,36 @@
 <odoo>
     <record id="school_attendance_action" model="ir.actions.act_window">
-        <field name="name">Students Class Attendance</field>
+        <field name="name">Students Attendance</field>
         <field name="res_model">school.attendance</field>
         <field name="view_mode">tree,form</field>
+    </record>
+
+
+     <!-- Form  -->
+    <record id="school_attendance_view_form" model="ir.ui.view">
+        <field name="name">school.attendance.view.form</field>
+        <field name="model">school.attendance</field>
+        <field name="arch" type="xml">
+           
+            <form string="Students Attendances" create="1" >
+                <sheet>
+                    <group>
+                        <field name="student_id"/>
+                        <field name="is_present"/>
+                        <field name="date"/>
+                        <field name="schedule_id"/>
+                        <field name="school_id"/>
+                        <field name="teacher_id"/>
+                        <field name="course_id"/>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
     </record>
 
 
